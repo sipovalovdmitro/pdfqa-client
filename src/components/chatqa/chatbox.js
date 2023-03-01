@@ -34,7 +34,7 @@ const ChatBox = () => {
     formData.append("prompt", prompt);
 
     const response = await axios.post(
-      "http://localhost:5000/api/chat",
+      "/api/chat",
       formData
     );
 
