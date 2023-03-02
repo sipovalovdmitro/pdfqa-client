@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button, List, Avatar, message } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import axios from "axios";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import "./index.css";
+import { useParams } from "react-router-dom";
 
 const ChatBox = () => {
+  // Hooks
   const [history, setHistory] = useState([
     {
       type: "human",
@@ -15,12 +18,37 @@ const ChatBox = () => {
       type: "bot",
       text: "Ask me any questions related to this PDF context.",
     },
-  ]);
-  const [prompt, setPrompt] = useState("");
-  const [isAnswered, setIsAnswered] = useState(true);
+  ]); // Chat History
+  const [prompt, setPrompt] = useState(""); // Question
+  const [isAnswered, setIsAnswered] = useState(true); // Answer state
+  const params = useParams(); // Url Params
+  const { sendMessage, lastMessage, readyState } = useWebSocket(
+    `ws://monkfish-app-2cxx3.ondigitalocean.app:9000/api/chat/${params.id}`
+  );
+
+  // Receive Messages
+  useEffect(() => {
+    if (lastMessage !== null) {
+      // Add History
+      setHistory((prev) =>
+        prev.concat({ type: "bot", text: lastMessage.data })
+      );
+      // Think Stop Flag
+      setIsAnswered(true);
+    }
+  }, [lastMessage]);
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Before answer, make user not to ask questions
     if (!isAnswered) {
       message.warning("AI Bot is thinking! Please wait!");
       return;
@@ -28,19 +56,9 @@ const ChatBox = () => {
     setIsAnswered(false);
     history.push({ type: "human", text: prompt });
     setHistory([...history]);
+
+    sendMessage(prompt);
     setPrompt("");
-
-    let formData = new FormData();
-    formData.append("prompt", prompt);
-
-    const response = await axios.post(
-      "/api/chat",
-      formData
-    );
-
-    history.push({ type: "bot", text: response.data.answer });
-    setHistory([...history]);
-    setIsAnswered(true);
   };
 
   return (
@@ -75,6 +93,7 @@ const ChatBox = () => {
             onChange={(e) => setPrompt(e.target.value)}
             size="large"
             value={prompt}
+            disabled={readyState !== ReadyState.OPEN}
           />
           <Button
             htmlType="submit"
@@ -82,6 +101,7 @@ const ChatBox = () => {
             shape="circle"
             icon={<SendOutlined />}
             size="large"
+            disabled={readyState !== ReadyState.OPEN}
           />
         </Input.Group>
       </form>
