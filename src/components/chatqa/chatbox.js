@@ -23,7 +23,7 @@ const ChatBox = () => {
   const [isAnswered, setIsAnswered] = useState(true); // Answer state
   const params = useParams(); // Url ParamsZ
   const { sendMessage, lastMessage, readyState } = useWebSocket(
-    `ws://monkfish-app-2cxx3.ondigitalocean.app/api/chat/${params.id}`
+    `wss://monkfish-app-2cxx3.ondigitalocean.app/api/chat/${params.id}`
   );
 
   // Receive Messages
