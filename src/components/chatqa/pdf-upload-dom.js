@@ -14,7 +14,7 @@ const PDFUpload = () => {
 
   const draggerProps = {
     maxCount: 1,
-    action: `https://monkfish-app-2cxx3.ondigitalocean.app:9000/api/upload/${params.id}`,
+    action: `https://monkfish-app-2cxx3.ondigitalocean.app/api/upload/${params.id}`,
     onChange(info) {
       const { status } = info.file;
       if (status === "done")
