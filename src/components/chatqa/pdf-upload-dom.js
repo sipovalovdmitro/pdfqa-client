@@ -14,7 +14,7 @@ const PDFUpload = () => {
 
   const draggerProps = {
     maxCount: 1,
-    action: `/api/upload/${params.id}`,
+    action: `/api/pdf/upload/${params.id}`,
     onChange(info) {
       const { status } = info.file;
       if (status === "done")
