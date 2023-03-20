@@ -15,9 +15,7 @@ const ChatBox = (props) => {
     },
     {
       type: "bot",
-      text: `Ask me any questions related to this ${
-        props.type == "pdf" ? "PDF" : "Video"
-      } context.`,
+      text: "Ask me any thing",
     },
   ]); // Chat History
   const [prompt, setPrompt] = useState(""); // Question
