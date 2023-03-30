@@ -8,9 +8,7 @@ import "./index.css";
 const TrainPage = () => {
   return (
     <>
-      <Row
-        style={{ backgroundColor: "rgb(16, 16, 16)", height: "fit-content" }}
-      >
+      <Row style={{ backgroundColor: "rgb(16, 16, 16)", height: "100vh" }}>
         <Col span={12}>
           <FileUpload />
         </Col>
