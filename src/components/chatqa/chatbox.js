@@ -39,7 +39,7 @@ const ChatBox = () => {
   const params = useParams(); // Url Params
   const chatHistoryRef = useRef(null);
   const { sendMessage, lastMessage, readyState } = useWebSocket(
-    `ws://localhost:9000/api/chat/${params.id}`
+    `wss://monkfish-app-2cxx3.ondigitalocean.app/api/chat/${params.id}`
   ); // Websocket Hook
 
   // Receive Messages
