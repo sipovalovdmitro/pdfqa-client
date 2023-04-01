@@ -138,7 +138,7 @@ const ChatBox = () => {
           color: "white",
         }}
       >
-        {!settings ? `Music Business Bot ${params.id}` : settings.title}
+        {!settings ? `AI bot ${params.id}` : settings.title}
       </h1>
       {settings && settings.header !== "" && (
         <img
