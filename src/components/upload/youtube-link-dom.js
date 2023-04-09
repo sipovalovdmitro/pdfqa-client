@@ -15,7 +15,7 @@ const YoutubeLinkDom = () => {
 
     setVideoURL(`https://${value}`);
     axios
-      .post(`/api/youtube/train/${params.id}`, {
+      .post(`http://localhost:9000/api/youtube/train/${params.id}`, {
         url: `https://${value}`,
       })
       .then(() => {
