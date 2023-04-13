@@ -41,7 +41,7 @@ const ChatBox = () => {
   const params = useParams(); // Url Params
   const chatHistoryRef = useRef(null);
   const { sendMessage, lastMessage, readyState } = useWebSocket(
-    `ws://${SERVER_URL}/api/chat/${params.id}`
+    `wss://${SERVER_URL}/api/chat/${params.id}`
   ); // Websocket Hook
 
   // Receive Messages
@@ -114,10 +114,10 @@ const ChatBox = () => {
               : type === "bot"
               ? settings.bot === ""
                 ? "/assets/images/bot.png"
-                : `http://${SERVER_URL}/settings/${params.id}/${settings.bot}`
+                : `https://${SERVER_URL}/settings/${params.id}/${settings.bot}`
               : settings.user === ""
               ? "/assets/images/user.png"
-              : `http://${SERVER_URL}/settings/${params.id}/${settings.user}`
+              : `https://${SERVER_URL}/settings/${params.id}/${settings.user}`
           }
           width={35}
           height={35}
@@ -146,7 +146,7 @@ const ChatBox = () => {
       </h1>
       {settings && settings.header !== "" && (
         <img
-          src={`http://${SERVER_URL}/settings/${params.id}/${settings.header}`}
+          src={`https://${SERVER_URL}/settings/${params.id}/${settings.header}`}
         />
       )}
       <div className="chat_history" ref={chatHistoryRef}>
