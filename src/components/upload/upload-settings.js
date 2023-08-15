@@ -61,6 +61,7 @@ const UploadSettings = () => {
               options={[
                 { value: "text-davinci-003", label: "GPT-3" },
                 { value: "gpt-3.5-turbo", label: "GPT-3.5" },
+                { value: "gpt-4", label: "GPT-4" },
               ]}
             />
           </Form.Item>
